@@ -27,6 +27,7 @@ package com.amala.stockticker.consumer;
 import com.amala.stockticker.model.StockPriceEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 @Service
 public class StockPriceConsumer {
@@ -57,18 +58,21 @@ public class StockPriceConsumer {
             topics = "stock-prices",
             groupId = "stock-consumer-group"
     )
-    public void consume(StockPriceEvent event) {
+    public void consume(ConsumerRecord<String, StockPriceEvent> record) {
 
-        System.out.println("--------------------------------");
+        StockPriceEvent event = record.value();
 
+        System.out.println("================================================");
         System.out.println("Received Stock Event");
-
-        System.out.println("Symbol    : " + event.getSymbol());
-
-        System.out.println("Price     : " + event.getPrice());
-
-        System.out.println("Timestamp : " + event.getTimestamp());
-
-        System.out.println("--------------------------------");
+        System.out.println();
+        System.out.println("Topic      : " + record.topic());
+        System.out.println("Partition  : " + record.partition());
+        System.out.println("Offset     : " + record.offset());
+        System.out.println("Key        : " + record.key());
+        System.out.println();
+        System.out.println("Symbol     : " + event.getSymbol());
+        System.out.println("Price      : " + event.getPrice());
+        System.out.println("Timestamp  : " + event.getTimestamp());
+        System.out.println("================================================");
     }
 }

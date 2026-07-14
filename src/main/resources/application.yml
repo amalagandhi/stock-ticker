@@ -15,5 +15,11 @@ spring:
 
       properties:
         spring.json.trusted.packages: com.amala.stockticker.model
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 server:
   port: 8080
