@@ -25,13 +25,19 @@
 package com.amala.stockticker.consumer;
 
 import com.amala.stockticker.model.StockPriceEvent;
+import com.amala.stockticker.service.StockPriceCacheService;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-@Service
+@Component
 public class StockPriceConsumer {
 
+    private final StockPriceCacheService stockPriceCacheService;
+
+    public StockPriceConsumer(StockPriceCacheService stockPriceCacheService) {
+        this.stockPriceCacheService = stockPriceCacheService;
+    }
     /*
      * Registers this method as a Kafka message listener.
      *
@@ -61,6 +67,7 @@ public class StockPriceConsumer {
     public void consume(ConsumerRecord<String, StockPriceEvent> record) {
 
         StockPriceEvent event = record.value();
+        stockPriceCacheService.cacheLatestPrice(event);
 
         System.out.println("================================================");
         System.out.println("Received Stock Event");
