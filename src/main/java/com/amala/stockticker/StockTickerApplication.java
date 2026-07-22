@@ -87,7 +87,7 @@ public class StockTickerApplication {
      * SpringApplication.run() bootstraps the complete Spring application.
      *
      * Unlike a traditional Java application, we do not manually create
-     * objects here. Spring creates and manages application objects
+     * s here. Spring creates and manages application objects
      * (Beans) inside the ApplicationContext.
      */
     public static void main(String[] args) {
